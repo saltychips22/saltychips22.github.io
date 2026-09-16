@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>flexi time calculator</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/x-icon" href="/images/favicon/frog.png">
+  <style>
+	body {
+	font-family:"Comic Relief", sans-serif;
+	font-optical-sizing: auto;
+ 	font-weight: 500;
+	font-size: larger;
+	font-style: normal;		
+	color: #161515;
+  	background-color: #f9fdf4;
+	/* margin-left: 10em;
+	margin-right: 10em	;
+	margin-top: 5em;
+	margin-bottom:10em; */
+	max-width: 800px;
+	padding:1em;
+	margin: 2em auto;
+}
+
+h1 {
+	text-align: center;
+	font-weight: 500;
+	color:#18120c;
+}
+
+button{
+  background-color: #ffeeee;
+  color: white;
+  
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+  font-family:"Comic Relief", sans-serif;
+  color: #161515;	
+}
+
+  </style>
+</head>
+<body>
+
+<h1>flexi time calculator >:) </h1>
+
+<div id="textBody">
+
+arrival time
+<input type="number" id="arrival" placeholder="e.g 0852"><br>
+lunch length
+<input type="number" id="lunch" placeholder="time in minutes"><br>
+net flexi
+<input type="number" id="flexiWanted" placeholder="flexi to gain/spend"><br>
+<button onclick="button1()">when do i leave please</button><br>
+or put in the time you wanna leave and see how much flexi you gain
+<br> leave time 
+<input type="number" id="leavingTime" placeholder="time you plan to leave"><br>
+<button onclick="button2()">how much flexi???</button><br>
+<p id="leave"></p>
+</div>
+
+<script>
+function button1() {
+	var arrival = Number(document.getElementById("arrival").value);
+	var lunch = Number(document.getElementById("lunch").value);
+	var flexiWanted =(document.getElementById("flexiWanted").value);
+	
+	var arrivalHours = Math.floor(arrival/100);
+	var arrivalMinutes = arrival-arrivalHours*100;
+	const workTime = 7*60 + 27;
+	var dayTime = workTime+lunch;
+		
+	var totalArrivalMinutes=arrivalHours*60+arrivalMinutes;
+	
+	if (flexiWanted.trim() !=""){
+		flexiWanted=Number(flexiWanted);
+		dayTime= dayTime+flexiWanted;
+	}
+	var totalLeaveMinutes=totalArrivalMinutes+dayTime;
+	var leaveHours=Math.floor(totalLeaveMinutes/60);
+	var leaveMinutes=totalLeaveMinutes-leaveHours*60; 	
+	var militaryLeaveTime=leaveHours*100+leaveMinutes;
+			
+  document.getElementById("leave").innerHTML = "you should leave at " + militaryLeaveTime;
+}
+function button2() {
+	var arrival = Number(document.getElementById("arrival").value);
+	var lunch = Number(document.getElementById("lunch").value);
+	var leavingTime = Number(document.getElementById("leavingTime").value);
+	
+	var arrivalHours = Math.floor(arrival/100);
+	var arrivalMinutes = arrival-arrivalHours*100;
+	var totalArrivalMinutes=arrivalHours*60+arrivalMinutes;
+	
+	var leavingHours = Math.floor(leavingTime/100);
+	var leavingMinutes = leavingTime-leavingHours*100;
+	var totalLeavingMinutes=leavingHours*60+leavingMinutes;
+	
+	const workTime = 7*60 + 27;
+	var dayTime = workTime+lunch;
+	
+	var flexiCalculated = totalLeavingMinutes-totalArrivalMinutes-dayTime;
+			
+  document.getElementById("leave").innerHTML = "you will gain " + flexiCalculated +" minutes of flexi time";
+}
+</script>
+
+
+
+</body>
+</html>
